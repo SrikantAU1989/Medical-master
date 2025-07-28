@@ -7,6 +7,18 @@ pipeline {
                sh 'mvn clean install'
             }
         }
+stage('Build Jar') {
+    steps {
+        sh 'mvn clean package'
+    }
+}
+
+stage('Build Docker Image') {
+    steps {
+        sh 'docker build -t myapp .'
+    }
+}
+
         stage('Build docker image'){
             steps{
                 script{
