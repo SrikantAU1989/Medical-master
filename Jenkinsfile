@@ -28,6 +28,12 @@ pipeline{
                 sh 'mvn package'
             }
         }
+        stage('Build with Maven') {
+    steps {
+        sh 'mvn clean package -DskipTests'
+    }
+}
+
         stage('run dockerfile'){
           steps{
                sh 'docker build -t myimg .'
