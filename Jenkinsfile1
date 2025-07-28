@@ -3,7 +3,7 @@ pipeline {
     stages{
         stage('Build Maven'){
             steps{
-                git branch: 'main', url: 'https://github.com/SrikantAU1989/Medical-master.git'
+                git branch: 'master', url: 'https://github.com/SrikantAU1989/Medical-master.git'
                sh 'mvn clean install'
             }
         }
