@@ -7,13 +7,13 @@ pipeline{
                  echo 'github url checkout'
             }
         }
-        stage('codecompile with akshat'){
+        stage('codecompile with srikant'){
             steps{
                 echo 'starting compiling'
                 sh 'mvn compile'
             }
         }
-        stage('codetesting with akshat'){
+        stage('codetesting with srikant'){
             steps{
                 sh 'mvn test'
             }
@@ -23,7 +23,7 @@ pipeline{
                 sh 'mvn checkstyle:checkstyle'
             }
         }
-        stage('package with akshat'){
+        stage('package with srikant'){
             steps{
                 sh 'mvn package'
             }
@@ -41,7 +41,7 @@ pipeline{
          }
         stage('port expose'){
             steps{
-                sh 'docker run -dt -p 8091:8091 --name c000 myimg'
+                sh 'docker run -dt -p 8092:8092 --name c000 myimg'
             }
         }   
     }
