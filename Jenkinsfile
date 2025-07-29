@@ -1,48 +1,29 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage('checkout the code from github'){
-            steps{
-                 git branch: 'master', url: 'https://github.com/SrikantAU1989/Medical-master.git'
-                 echo 'github url checkout'
-            }
-        }
-        stage('codecompile with srikant'){
-            steps{
-                echo 'starting compiling'
-                sh 'mvn compile'
-            }
-        }
-        stage('codetesting with srikant'){
-            steps{
-                sh 'mvn test'
-            }
-        }
-        stage('qa with akshat'){
-            steps{
-                sh 'mvn checkstyle:checkstyle'
-            }
-        }
-        stage('package with srikant'){
-            steps{
-                sh 'mvn package'
-            }
-        }
-        stage('Build with Maven') {
-    steps {
-        sh 'mvn clean package -DskipTests'
-    }
-}
 
-        stage('run dockerfile'){
-          steps{
-               sh 'docker build -t myimg .'
-           }
-         }
-        stage('port expose'){
-            steps{
-                sh 'docker run -dt -p 8091:8091 --name c000 myimg'
+    stages {
+        stage('Clone') {
+            steps {
+                git 'https://github.com/SrikantAU1989/Medical-master.git'
             }
-        }   
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t hospital-app .'
+            }
+        }
+        stage('Docker Run') {
+            steps {
+                sh '''
+                  docker rm -f hospital-container || true
+                  docker run -d -p 8080:8080 --name hospital-container hospital-app
+                '''
+            }
+        }
     }
 }
