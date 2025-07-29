@@ -21,7 +21,7 @@ pipeline {
             steps {
                 sh '''
                   docker rm -f hospital-container || true
-                  docker run -d -p 8080:8080 --name hospital-container hospital-app
+                  docker run -d -p 8091:8091 --name hospital-container hospital-app
                 '''
             }
         }
